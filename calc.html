@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="./index.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Exo 2:wght@500;600&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap"
+    />
+  </head>
+  <body>
+    <div class="footer-parent" id="second">
+    <div class="header">
+        <div class="header-child"></div>
+       <a href="index.html"><div class="carshareby">CarShare.By</div></a>
+        <nav class="menu">
+
+            <input id="menu-toggle" type="checkbox">
+            <label class="menu-btn" for="menu-toggle">
+                <span></span>
+            </label>
+
+            <ul class="menu__box">
+                <li><a class="menu__item" href="index.html#">О нас</a></li>
+                <li><a class="menu__item" href="index.html#c">Контакты</a></li>
+                <li><a class="menu__item" href="index.html#v">Видео</a></li>
+                <li><a class="menu__item" href="#">Калькулятор</a></li>
+              </ul>
+        </nav>
+        <div class="links">
+           <a href="index.html#"> <div class="div28">О нас</div></a>
+           <a href="index.html#c"><div class="div29">Контакты</div></a>
+            <a href="index.html#v"><div class="div30">Видео</div></a>
+            <a href="#"><div class="div31">Калькулятор</div></a>
+        </div>
+    </div>
+    <div class="special">
+        <div class="special-child"></div>
+        <img class="image-1-icon" alt="" src="./assets/png/image-1@2x.png" />
+
+        <div class="textspecial">
+          <div class="div27">Арендуй сегодня!</div>
+          <div class="volkswagen-polo-2023-container">
+            <p class="p">Новый Volkswagen Polo</p>
+            <p class="p">2023-ого года выпуска</p>
+            <p class="p">только у нас</p>
+          </div>
+        </div>
+      </div>
+      <div class="service">
+        <div class="service-child"></div>
+        <div class="div26">Калькулятор</div>
+        <form class="calc">
+            <label for="products">Выберите тариф:</label>
+            <br>
+            <select id="products">
+              <option value="">--Тариф--</option>
+              <option value="Эконом" data-price="20">Эконом</option>
+              <option value="Стандарт" data-price="40">Стандарт</option>
+              <option value="Стандарт+" data-price="100">Стандарт+</option>
+            </select>
+            <br>
+            <label for="quantity">Количество поездок:</label>
+            <br>
+            <input type="number" id="quantity" min="1" max="10">
+            <br>
+            <button type="button" id="add-to-cart">Заказать</button>
+          </form>
+          <br>
+          <ul id="cart"></ul>
+          <p id="total"></p>
+          <button id="order" onclick="finish()">Оформить Заказать</button>
+      </div>
+      <script>
+        function finish(){
+            alert("Заказ оформлен успешно!");
+            location.reload();
+        }
+        // Находим элементы HTML:
+            const productsSelect = document.getElementById('products');
+            const quantityInput = document.getElementById('quantity');
+            const addToCartButton = document.getElementById('add-to-cart');
+            const cartList = document.getElementById('cart');
+            const total = document.getElementById('total');
+
+            // Объявляем объект корзины:
+            const cart = {
+            items: [],
+            
+            // Метод для добавления товара в корзину:
+            addItem(item) {
+                this.items.push(item);
+            },
+            
+            // Метод для подсчета общей стоимости товаров в корзине:
+            getTotal() {
+                return this.items.reduce((total, item) => {
+                return total + (item.price * item.quantity);
+                }, 0);
+            },
+            
+            // Метод для отображения корзины:
+            render() {
+                cartList.innerHTML = '';
+                this.items.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.quantity} x ${item.product} - ${item.price * item.quantity} руб.`;
+                cartList.appendChild(li);
+                });
+                
+                total.textContent = `Общая стоимость: ${this.getTotal()} руб.`;
+            }
+            };
+
+            // Обработчик события клика на кнопку "Добавить в корзину":
+            addToCartButton.addEventListener('click', () => {
+            const product = productsSelect.value;
+            const quantity = quantityInput.value;
+            
+            if (product && quantity) {
+                const price = parseFloat(productsSelect.options[productsSelect.selectedIndex].getAttribute('data-price'));
+                
+                // Создаем объект товара и добавляем его в корзину:
+                const item = { product, quantity, price };
+                cart.addItem(item);
+                
+                // Отображаем корзину:
+                cart.render();
+                
+                // Очищаем поля выбора товара и ввода количества:
+                productsSelect.value = '';
+                quantityInput.value = '';
+            }
+            });
+      </script>
+    <div class="footer">
+        <div class="footer-child"></div>
+        <div class="div">©2023</div>
+        <div class="div1">Лемешевский Григориий</div>
+        <div class="div2">+375 29 000-00-82</div>
+        <img class="footer-item" alt="" src="./assets/svg/frame-25.svg" />
+    </div>
+  </div>
+</body>
+</html>
